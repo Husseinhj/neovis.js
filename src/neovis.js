@@ -371,7 +371,7 @@ export default class NeoVis {
 						this._data.nodes.update(Object.values(this._nodes));
 						this._data.edges.update(Object.values(this._edges));
 					} else {
-						var options = option
+						let options = option;
 						if (!options) {
 							options = {
 								nodes: {
