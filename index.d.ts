@@ -52,6 +52,7 @@ declare class Neovis {
     get nodes(): DataSet<INode>;
     get edges(): DataSet<IEdge>;
     render(): void;
+    render(query, option): void;
     clearNetwork(): void;
     registerOnEvent(eventType: string, handler: (event: any) => void): void;
     reinit(config: INeovisConfig): void;

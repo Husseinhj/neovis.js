@@ -297,7 +297,7 @@ export default class NeoVis {
 
 	// public API
 
-	render(query) {
+	render(query, option) {
 
 		// connect to Neo4j instance
 		// run query
@@ -371,48 +371,50 @@ export default class NeoVis {
 						this._data.nodes.update(Object.values(this._nodes));
 						this._data.edges.update(Object.values(this._edges));
 					} else {
-						let options = {
-							nodes: {
-								//shape: 'dot',
-								font: {
-									size: 26,
-									strokeWidth: 7
+						var options = option
+						if (!options) {
+							options = {
+								nodes: {
+									//shape: 'dot',
+									font: {
+										size: 26,
+										strokeWidth: 7
+									},
+									scaling: {}
 								},
-								scaling: {
-								}
-							},
-							edges: {
-								arrows: {
-									to: { enabled: this._config.arrows || false } // FIXME: handle default value
+								edges: {
+									arrows: {
+										to: {enabled: this._config.arrows || false} // FIXME: handle default value
+									},
+									length: 200
 								},
-								length: 200
-							},
-							layout: {
-								improvedLayout: false,
-								hierarchical: {
-									enabled: this._config.hierarchical || false,
-									sortMethod: this._config.hierarchical_sort_method || 'hubsize'
-								}
-							},
-							physics: { // TODO: adaptive physics settings based on size of graph rendered
-								// enabled: true,
-								// timestep: 0.5,
-								// stabilization: {
-								//     iterations: 10
-								// }
+								layout: {
+									improvedLayout: false,
+									hierarchical: {
+										enabled: this._config.hierarchical || false,
+										sortMethod: this._config.hierarchical_sort_method || 'hubsize'
+									}
+								},
+								physics: { // TODO: adaptive physics settings based on size of graph rendered
+									// enabled: true,
+									// timestep: 0.5,
+									// stabilization: {
+									//     iterations: 10
+									// }
 
-								adaptiveTimestep: true,
-								// barnesHut: {
-								//     gravitationalConstant: -8000,
-								//     springConstant: 0.04,
-								//     springLength: 95
-								// },
-								stabilization: {
-									iterations: 200,
-									fit: true
+									adaptiveTimestep: true,
+									// barnesHut: {
+									//     gravitationalConstant: -8000,
+									//     springConstant: 0.04,
+									//     springLength: 95
+									// },
+									stabilization: {
+										iterations: 200,
+										fit: true
+									}
 								}
-							}
-						};
+							};
+						}
 
 						const container = this._container;
 						this._data = {
@@ -527,7 +529,7 @@ export default class NeoVis {
 	/**
 	 * Execute an arbitrary Cypher query and update the current visualization, retaning current nodes
 	 * This function will not change the original query given by renderWithCypher or the inital cypher.
-	 * @param query 
+	 * @param query
 	 */
 	updateWithCypher(query) {
 		this.render(query);
